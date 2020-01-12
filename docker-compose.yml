@@ -1,0 +1,68 @@
+version: "3.7"
+
+services:
+  phpfpm:
+    build: docker-image/php
+    volumes: &appvolumes
+      - sockdata:/sock
+      - ../.composer:/var/www/.composer:delegated
+      - ../.composer:/var/www/html/var/composer_home:delegated
+      - ./config/dockergento/nginx/conf/default.conf:/var/www/conf/nginx/default.conf:delegated
+    environment:
+      PHP_IDE_CONFIG: serverName=magento2.local
+    depends_on:
+      - db
+      - elasticsearch
+
+  nginx:
+    build: docker-image/nginx
+    ports:
+      - 80:8000
+    volumes: *appvolumes
+    depends_on:
+      - phpfpm
+
+  db:
+    image: mysql:5.7
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: magento
+      MYSQL_USER: magento
+      MYSQL_PASSWORD: magento
+    volumes:
+      - dbdata:/var/lib/mysql
+
+  node:
+    image: modestcoders/node-php:node8-php7.2
+    ports:
+      - 35729:35729
+    volumes: *appvolumes
+    depends_on:
+      - phpfpm
+
+  phpmyadmin:
+      image: phpmyadmin/phpmyadmin
+      container_name: phpmyadmin_conectou
+      environment:
+        - PMA_ARBITRARY=1
+      restart: always
+      ports:
+        - 8080:80
+      links:
+        - db
+      volumes:
+        - /sessions
+
+  elasticsearch:
+    build: docker-image/elasticsearch
+    environment:
+      - discovery.type=single-node
+    volumes:
+      - elasticsearch_data:/usr/share/elasticsearch/data
+
+volumes:
+  dbdata:
+  sockdata:
+  elasticsearch_data:

@@ -1,0 +1,17 @@
+bin/magento setup:install --admin-firstname=jefferson \
+--admin-lastname=porto \
+--admin-email=sample@sample123.com \
+--admin-user=az2009 \
+--admin-password=tuning2006 \
+--base-url=https://magento2.local/ \
+--backend-frontname=admin \
+--db-host=db \
+--db-name=magento \
+--db-user=magento \
+--db-password=magento \
+--language=pt_BR \
+--currency=BRL \
+--timezone=America/Sao_Paulo \
+--use-rewrites=1 \
+--cleanup-database \
+--session-save=files
