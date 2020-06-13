@@ -4,6 +4,7 @@ services:
   phpfpm:
     volumes: &appvolumes-linux
       - ../:/var/www/html
+      - /home:/home
 
   nginx:
     volumes: *appvolumes-linux

@@ -3,7 +3,7 @@
 --admin-email=sample@sample123.com \
 --admin-user=az2009 \
 --admin-password=tuning2006 \
---base-url=https://magento2.local/ \
+--base-url=http://magento2.local/ \
 --backend-frontname=admin \
 --db-host=db \
 --db-name=conectou \
