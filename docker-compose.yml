@@ -44,7 +44,7 @@ services:
 
   phpmyadmin:
       image: phpmyadmin/phpmyadmin
-      container_name: phpmyadmin_conectou
+      container_name: phpmyadmin
       environment:
         - PMA_ARBITRARY=1
       restart: always
